@@ -111,6 +111,10 @@
 *.pem
 *.key
 
+# Generated vault documents
+vault/**
+!vault/.gitkeep
+
 # Temporary files
 *.tmp
 *.temp

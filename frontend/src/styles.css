@@ -1,0 +1,300 @@
+:root {
+  --ink: #1c1914;
+  --ink-soft: #4a453c;
+  --paper: #f4efe4;
+  --paper-2: #ebe4d4;
+  --panel: #faf7f0;
+  --line: #d9d0bc;
+  --accent: #8a3b24;
+  --accent-2: #2f5d50;
+  --gold: #c4a35a;
+  --warn: #9a5b12;
+  --ok: #2f5d50;
+  --shadow: 0 18px 40px rgba(40, 32, 18, 0.08);
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --serif: "Fraunces", Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 500px at 10% -10%, #fff8e8 0%, transparent 50%),
+    radial-gradient(900px 400px at 100% 0%, #e7efe9 0%, transparent 45%),
+    var(--paper);
+}
+
+#app {
+  display: grid;
+  grid-template-columns: 280px 1fr 380px;
+  height: 100vh;
+  min-width: 1100px;
+}
+
+.sidebar, .chat, .inspector {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar {
+  border-right: 1px solid var(--line);
+  background: var(--panel);
+  padding: 22px 18px;
+}
+
+.brand {
+  font-family: var(--serif);
+  font-size: 28px;
+  letter-spacing: -0.03em;
+  margin: 0 0 4px;
+}
+.brand span { color: var(--accent); }
+.tagline {
+  color: var(--ink-soft);
+  font-size: 12px;
+  margin: 0 0 22px;
+}
+
+.status-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 18px;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.dot.ok { background: var(--ok); }
+.dot.bad { background: #a33; }
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 8px 0 10px;
+}
+
+.phases {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+.phases li {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  padding: 6px 0;
+  color: #9a927f;
+}
+.phases li.active { color: var(--ink); font-weight: 600; }
+.phases li.done { color: var(--ok); }
+.phases .n {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  font-family: var(--mono);
+}
+
+.search {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 8px 10px;
+  font: 13px var(--sans);
+  margin-bottom: 10px;
+}
+.tree {
+  flex: 1;
+  overflow: auto;
+  font-size: 13px;
+}
+.tree-item {
+  padding: 5px 6px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  gap: 6px;
+}
+.tree-item:hover, .tree-item.on { background: var(--paper-2); }
+.folder { color: var(--accent-2); font-weight: 600; }
+.file { color: var(--ink); }
+.muted { color: #9a927f; font-size: 12px; }
+
+.chat { padding: 22px 28px 16px; }
+.chat-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+.chat-head h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  margin: 0;
+  font-size: 26px;
+}
+.messages {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 6px;
+}
+.bubble {
+  max-width: 86%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  background: #fff;
+  box-shadow: var(--shadow);
+  white-space: pre-wrap;
+  line-height: 1.5;
+  font-size: 14px;
+}
+.bubble.user { align-self: flex-end; background: #2b2620; color: #f6f1e6; }
+.bubble.system { align-self: center; background: transparent; box-shadow: none; color: var(--ink-soft); font-size: 12px; border-style: dashed; }
+.bubble.assistant { align-self: flex-start; }
+.composer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 12px;
+}
+textarea {
+  width: 100%;
+  min-height: 72px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  background: #fff;
+  font: 14px var(--sans);
+  padding: 10px 12px;
+}
+button {
+  font: 600 13px var(--sans);
+  border: 0;
+  background: var(--ink);
+  color: #f6f1e6;
+  padding: 0 16px;
+  cursor: pointer;
+}
+button.ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+button.ok { background: var(--accent-2); }
+button.warn { background: var(--accent); }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.inspector {
+  border-left: 1px solid var(--line);
+  background: var(--panel);
+  padding: 18px;
+}
+.gate {
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+.gate h3 {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 20px;
+}
+.gate p { margin: 0 0 10px; font-size: 13px; color: var(--ink-soft); line-height: 1.45; }
+.actions { display: flex; gap: 8px; }
+.kv { font-size: 12px; display: grid; gap: 6px; margin: 10px 0; }
+.kv b { font-weight: 600; }
+.list {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 13px;
+}
+.doc-card {
+  border-top: 1px solid var(--line);
+  padding: 8px 0;
+  font-size: 13px;
+}
+.doc-card strong { display: block; margin-bottom: 4px; }
+.path {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+}
+.editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.editor header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+.editor textarea {
+  flex: 1;
+  font: 12.5px/1.55 var(--mono);
+  min-height: 220px;
+}
+.empty {
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.crew {
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 12px;
+  margin-bottom: 14px;
+  overflow: auto;
+  max-height: 42vh;
+}
+.crew h3 {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 18px;
+}
+.subtask {
+  display: grid;
+  grid-template-columns: 10px 1fr auto;
+  gap: 8px;
+  align-items: start;
+  font-size: 12px;
+  padding: 6px 0;
+  border-top: 1px solid var(--line);
+}
+.subtask .mark {
+  width: 8px;
+  height: 8px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: #cfc6b0;
+}
+.subtask.running .mark { background: var(--gold); }
+.subtask.done .mark { background: var(--ok); }
+.subtask.error .mark { background: var(--accent); }
+.pill {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
